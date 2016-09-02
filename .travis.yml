@@ -3,9 +3,10 @@ compiler:
   - gcc
   - clang
 before_install:
-    - sudo apt-get -qq update
+  - sudo apt-get -qq update
 install:
-    - sudo apt-get -qq install rake bison git gperf
-    - DEBIAN_FRONTEND=noninteractive sudo -E apt-get -qq install mysql-server
+  - sudo apt-get -qq install rake bison git gperf
+before_script:
+  - sudo initctl stop mysql
 script:
   - rake test
