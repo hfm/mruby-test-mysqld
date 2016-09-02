@@ -95,12 +95,11 @@ class TestMysqld
     deprecated_version = VersionCmp.new('5.7.6')
 
     cmd = if current_version >= deprecated_version
-            "#{mysqld} --defaults-file='#{base_dir}/etc/my.cnf' --initialize-insecure"
+            "#{mysqld} --defaults-file='#{base_dir}/etc/my.cnf' --initialize-insecure --basedir='#{base_dir}' --datadir='#{mycnf[:datadir]}'"
           else
-            "#{mysql_install_db} --defaults-file='#{base_dir}/etc/my.cnf'"
+            mysql_base_dir = File.realpath(mysql_install_db).sub(/\/[^\/]+\/mysql_install_db$/, '')
+            "#{mysql_install_db} --defaults-file='#{base_dir}/etc/my.cnf' --basedir=#{mysql_base_dir} --datadir='#{mycnf[:datadir]}'"
           end
-
-    cmd = "#{cmd} --basedir='#{base_dir}' --datadir='#{mycnf[:datadir]}'"
     cmd
   end
 
