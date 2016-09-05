@@ -54,7 +54,7 @@ class TestMysqld
 
     while !File.exists?(mycnf[:pid_file])
       raise 'failed to launch mysqld' if Process.waitpid(pid, 1) > 0
-      sleep 0.1
+      sleep 1
     end
 
     db = MySQL::Database.new 'localhost', 'root', '', 'mysql', 3306, mycnf[:socket]
