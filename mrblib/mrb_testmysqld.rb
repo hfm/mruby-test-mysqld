@@ -1,5 +1,5 @@
 class TestMysqld
-  attr_reader :base_dir, :mycnf, :mysql_install_db, :mysqld, :pid
+  attr_reader :auto_start, :base_dir, :mycnf, :mysql_install_db, :mysqld, :pid
   def initialize(opts = {})
     @base_dir = opts[:base_dir] || "#{Dir.tmpdir}/mruby_testmysqld_#{Time.now.to_i}"
 
@@ -11,11 +11,13 @@ class TestMysqld
     @mysql_install_db = opts[:mysql_install_db] || _find_program('mysql_install_db')
     @mysqld = opts[:mysqld] || _find_program('mysqld')
     @pid = nil
+    @auto_start = opts[:auto_start] || 2
 
-    raise "mysqld is already running (#{mycnf[:pidfile]})" if File.exists? mycnf[:pidfile]
-
-    setup
-    start
+    if auto_start
+      raise "mysqld is already running (#{mycnf[:pidfile]})" if File.exists? mycnf[:pidfile]
+      setup if auto_start >= 2
+      start
+    end
   end
 
   def host
