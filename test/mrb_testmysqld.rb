@@ -3,7 +3,9 @@
 ##
 
 assert("TestMysqld#new") do
-  m = TestMysqld.new
+  opts = { database: 'example' }
+
+  m = TestMysqld.new(opts)
   d = MySQL::Database.new m.host, m.username, m.password, m.database, m.port, m.socket
 
   d.execute_batch 'create table sample(id int primary key, text text, f float)'
