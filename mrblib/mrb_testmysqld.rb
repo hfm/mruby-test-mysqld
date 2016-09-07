@@ -1,5 +1,5 @@
 class TestMysqld
-  attr_reader :auto_start, :base_dir, :mycnf, :mysql_install_db, :mysqld, :pid
+  attr_reader :auto_start, :base_dir, :mycnf, :mysql_install_db, :mysqld, :pid, :database
   def initialize(opts = {})
     @base_dir = opts[:base_dir] || "#{Dir.tmpdir}/mruby_testmysqld_#{Time.now.to_i}"
 
@@ -11,6 +11,7 @@ class TestMysqld
     @mysql_install_db = opts[:mysql_install_db] || _find_program('mysql_install_db')
     @mysqld = opts[:mysqld] || _find_program('mysqld')
     @pid = nil
+    @database = opts[:database] || 'test'
     @auto_start = opts[:auto_start] || 2
 
     if auto_start
@@ -30,10 +31,6 @@ class TestMysqld
 
   def username
     mycnf[:user] || 'root'
-  end
-
-  def database
-    mycnf[:database] || 'test'
   end
 
   def password
@@ -57,8 +54,8 @@ class TestMysqld
       sleep 1
     end
 
-    db = MySQL::Database.new 'localhost', 'root', '', 'mysql', 3306, mycnf[:socket]
-    db.execute_batch 'CREATE DATABASE IF NOT EXISTS test'
+    db = MySQL::Database.new host, username, password, 'mysql', port, socket
+    db.execute_batch "CREATE DATABASE IF NOT EXISTS #{database}"
     db.close
 
     at_exit { stop }
