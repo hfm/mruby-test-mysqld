@@ -45,7 +45,7 @@ class TestMysqld
     return if pid
 
     @pid = fork do
-      exec mysqld, "--defaults-file=#{base_dir}/etc/my.cnf", '-user=root'
+      exec mysqld, "--defaults-file=#{base_dir}/etc/my.cnf", '--user=root'
     end
     exit unless pid
 
