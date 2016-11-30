@@ -50,7 +50,7 @@ class TestMysqld
     exit unless pid
 
     while !File.exists?(mycnf[:pid_file])
-      raise 'failed to launch mysqld' if Process.waitpid(pid, 1) > 0
+      raise 'failed to launch mysqld' if Process.waitpid(pid, Process::WNOHANG) > 0
       sleep 1
     end
 
