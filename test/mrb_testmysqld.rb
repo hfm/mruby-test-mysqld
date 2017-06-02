@@ -3,6 +3,9 @@
 ##
 
 assert("TestMysqld#new") do
+  # workaround for: https://github.com/iij/mruby-tempfile/commit/727929fc05f9d0b566cafe888552fdfa81d64dab#diff-64c01c61cee2e63b00ac53bf7d7fb326R23
+  ["TMPDIR", "TMP", "TEMP", "USERPROFILE"].each { |d| ENV.delete(d) }
+
   opts = { database: 'example' }
 
   m = TestMysqld.new(opts)
