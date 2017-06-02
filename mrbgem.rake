@@ -1,7 +1,7 @@
 MRuby::Gem::Specification.new('mruby-test-mysqld') do |spec|
   spec.license = 'MIT'
   spec.authors = 'OKUMURA Takahiro'
-  spec.version = '0.0.1'
+  spec.version = '0.0.2'
 
   spec.add_dependency 'mruby-io'
   spec.add_dependency 'mruby-dir'
