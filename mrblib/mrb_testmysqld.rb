@@ -45,12 +45,14 @@ class TestMysqld
     return if pid
 
     @pid = fork do
-      exec mysqld, "--defaults-file=#{base_dir}/etc/my.cnf", '--user=root'
+      Exec.execv mysqld, "--defaults-file=#{base_dir}/etc/my.cnf", '--user=root'
     end
     exit unless pid
 
     while !File.exists?(mycnf[:pid_file])
-      raise 'failed to launch mysqld' if Process.waitpid(pid, 1) > 0
+      if !Process.waitpid(pid, Process::WNOHANG).nil? && Process.waitpid(pid, Process::WNOHANG) > 0
+        raise 'failed to launch mysqld'
+      end
       sleep 1
     end
 
