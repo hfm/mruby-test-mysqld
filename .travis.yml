@@ -1,12 +1,16 @@
 language: c
 addons:
   apt:
+    sources:
+      - mysql-5.7-trusty
     packages:
       - rake
       - bison
       - git
       - gperf
       - libonig-dev
+      - mysql-server
+      - mysql-client
 compiler:
   - gcc
   - clang
