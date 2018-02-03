@@ -13,7 +13,7 @@ compiler:
 before_script:
   - sudo initctl stop mysql
 env:
-  - MRUBY_VERSION=1.2.0
+  - MRUBY_VERSION=1.3.0
   - MRUBY_VERSION=master
 script:
   - rake test
