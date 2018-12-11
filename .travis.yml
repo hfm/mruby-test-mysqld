@@ -17,7 +17,8 @@ compiler:
 before_script:
   - sudo service mysql stop
 env:
-  - MRUBY_VERSION=1.4.0
+  - MRUBY_VERSION=1.4.1
+  - MRUBY_VERSION=2.0.0
   - MRUBY_VERSION=master
 script:
   - rake test
