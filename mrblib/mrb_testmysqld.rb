@@ -1,6 +1,6 @@
 class TestMysqld
   attr_reader :auto_start, :base_dir, :mycnf, :mysql_install_db, :mysqld, :pid, :database
-  def initialize(opts: {})
+  def initialize(opts = {})
     @base_dir = opts[:base_dir] || "#{Dir.tmpdir}/mruby_testmysqld_#{Time.now.to_i}"
 
     @mycnf = opts[:my_cnf] || {}
